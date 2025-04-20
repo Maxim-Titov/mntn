@@ -166,6 +166,43 @@ h5 {
   z-index: 75;
 }
 
+.load-end {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #051d27;
+  opacity: 1;
+  transition: all 1s ease;
+  z-index: 999;
+}
+.load-end.visible {
+  opacity: 0;
+  z-index: -2;
+}
+
+.load {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  animation: load 5s;
+}
+.load img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes load {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+}
 .slider {
   position: fixed;
   top: 50%;
@@ -364,7 +401,6 @@ header .container .profile:hover svg path {
 }
 #hero .container .scroll-btn {
   overflow: hidden;
-  transition: all 200ms ease;
 }
 #hero .container .scroll-btn a {
   color: #ffffff;
@@ -374,7 +410,7 @@ header .container .profile:hover svg path {
   align-items: center;
   opacity: 0;
   transform: translateY(-100%);
-  transition: opacity 1s ease, transform 1s ease;
+  transition: opacity 1s ease, transform 1s ease, color 200ms ease;
 }
 #hero .container .scroll-btn a p {
   margin-right: 16px;
@@ -384,15 +420,15 @@ header .container .profile:hover svg path {
 #hero .container .scroll-btn a svg path {
   transition: all 200ms ease;
 }
+#hero .container .scroll-btn a:hover {
+  color: #ffe083;
+}
+#hero .container .scroll-btn a:hover svg path {
+  fill: #ffe083;
+}
 #hero .container .scroll-btn.visible a {
   transform: translateY(0);
   opacity: 1;
-}
-#hero .container .scroll-btn:hover {
-  color: #ffe083;
-}
-#hero .container .scroll-btn:hover .scroll-btn svg path {
-  fill: #ffe083;
 }
 #hero.visible {
   opacity: 1;

@@ -46,7 +46,6 @@
 
         .scroll-btn {
             overflow: hidden;
-            transition: all 200ms ease;
 
             a {
                 color: $main-font-color;
@@ -56,7 +55,7 @@
                 align-items: center;
                 opacity: 0;
                 transform: translateY(-100%);
-                transition: opacity 1s ease, transform 1s ease;
+                transition: opacity 1s ease, transform 1s ease, color 200ms ease;
 
                 p {
                     margin-right: 16px;
@@ -69,24 +68,22 @@
                         transition: all 200ms ease;
                     }
                 }
+
+                &:hover {
+                    color: $second-font-color;
+
+                    svg {
+                        path {
+                            fill: $second-font-color;
+                        }
+                    }
+                }
             }
 
             &.visible {
                 a {
                     transform: translateY(0);
                     opacity: 1;
-                }
-            }
-
-            &:hover {
-                color: $second-font-color;
-
-                .scroll-btn {
-                    svg {
-                        path {
-                            fill: $second-font-color;
-                        }
-                    }
                 }
             }
         }

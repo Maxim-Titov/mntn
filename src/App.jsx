@@ -1,5 +1,6 @@
 import React from "react"
 
+import Load from "./components/Load"
 import Slider from "./components/Slider"
 import FollowUs from "./components/FollowUs"
 import Header from "./components/Header"
@@ -22,7 +23,8 @@ class App extends React.Component {
         this.state = {
             scrollOffset: 0,
             activeSection: "start",
-            hasAnimated: false
+            hasAnimated: false,
+            isLoaded: false
         }
 
         this.sectionRefs = {}
@@ -58,12 +60,18 @@ class App extends React.Component {
             this.sectionRefs[section.sectionId] = React.createRef()
         })
 
+        this.handleLoad = this.handleLoad.bind(this)
         this.handleScroll = this.handleScroll.bind(this)
         this.scrollToSection = this.scrollToSection.bind(this)
     }
 
     async componentDidMount() {
+        setTimeout(() => {
+            this.handleLoad()
+        }, 1000)
+
         window.addEventListener("scroll", this.handleScroll)
+
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -76,69 +84,85 @@ class App extends React.Component {
             threshold: 0.1
         })
 
-        const heroHg = document.querySelector('.hero-hg')
-        const heroMg = document.querySelector('.hero-mg')
-        const heroVg = document.querySelector('.hero-vg')
-        const siteBranding = document.querySelector('.site-branding')
-        const mainMenu = document.querySelector('.main-menu')
-        const profile = document.querySelector('.profile')
-        const slider = document.querySelector('.slider')
-        const followUs = document.querySelector('.follow-us')
-        const heroTitle = document.querySelector('#hero .title')
-        const heroSubTitle = document.querySelector('#hero .sub-title')
-        const heroScrollBtn = document.querySelector('#hero .scroll-btn')
+        setTimeout(() => {
+            const loadEnd = document.querySelector('.load-end')
 
-        if (heroHg) {
-            observer.observe(heroHg)
-        }
+            if (loadEnd) {
+                observer.observe(loadEnd)
+            }
+        }, 1000)
 
-        if (heroMg) {
-            observer.observe(heroMg)
-        }
+        setTimeout(() => {
+            const heroHg = document.querySelector('.hero-hg')
+            const heroMg = document.querySelector('.hero-mg')
+            const heroVg = document.querySelector('.hero-vg')
+            const siteBranding = document.querySelector('.site-branding')
+            const mainMenu = document.querySelector('.main-menu')
+            const profile = document.querySelector('.profile')
+            const slider = document.querySelector('.slider')
+            const followUs = document.querySelector('.follow-us')
+            const heroTitle = document.querySelector('#hero .title')
+            const heroSubTitle = document.querySelector('#hero .sub-title')
+            const heroScrollBtn = document.querySelector('#hero .scroll-btn')
 
-        if (heroVg) {
-            observer.observe(heroVg)
-        }
+            if (heroHg) {
+                observer.observe(heroHg)
+            }
 
-        if (siteBranding) {
-            observer.observe(siteBranding)
-        }
+            if (heroMg) {
+                observer.observe(heroMg)
+            }
 
-        if (mainMenu) {
-            observer.observe(mainMenu)
-        }
+            if (heroVg) {
+                observer.observe(heroVg)
+            }
 
-        if (profile) {
-            observer.observe(profile)
-        }
+            if (siteBranding) {
+                observer.observe(siteBranding)
+            }
 
-        if (slider) {
-            observer.observe(slider)
-        }
+            if (mainMenu) {
+                observer.observe(mainMenu)
+            }
 
-        if (followUs) {
-            observer.observe(followUs)
-        }
+            if (profile) {
+                observer.observe(profile)
+            }
 
-        if (heroTitle) {
-            observer.observe(heroTitle)
-        }
+            if (slider) {
+                observer.observe(slider)
+            }
 
-        if (heroSubTitle) {
-            observer.observe(heroSubTitle)
-        }
+            if (followUs) {
+                observer.observe(followUs)
+            }
 
-        if (heroScrollBtn) {
-            observer.observe(heroScrollBtn)
-        }
+            if (heroTitle) {
+                observer.observe(heroTitle)
+            }
+
+            if (heroSubTitle) {
+                observer.observe(heroSubTitle)
+            }
+
+            if (heroScrollBtn) {
+                observer.observe(heroScrollBtn)
+            }
+        }, 1500)
 
         setTimeout(() => {
             this.setState({ hasAnimated: true })
-        }, 1000)
+        }, 2500)
     }
 
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll)
+    }
+
+    handleLoad() {
+        this.setState({
+            isLoaded: true
+        })
     }
 
     handleScroll() {
@@ -206,45 +230,51 @@ class App extends React.Component {
             willChange: 'transform'
         } : {}
 
-        return (
-            <>
-                <img className="hero-hg" src={HeroHG} alt="hg" style={styleForHg} />
-                <img className="hero-mg" src={HeroMG} alt="mg" style={styleForMg} />
-                <img className="hero-vg" src={HeroVG} alt="vg" />
-                <img className="content-bg" src={ContentBG} alt="content bg" />
+        if (!this.state.isLoaded) {
+            return <Load />
+        } else {
+            return (
+                <>
+                    <div className="load-end"></div>
 
-                <div className="hero-gradient"></div>
+                    <img className="hero-hg" src={HeroHG} alt="hg" style={styleForHg} />
+                    <img className="hero-mg" src={HeroMG} alt="mg" style={styleForMg} />
+                    <img className="hero-vg" src={HeroVG} alt="vg" />
+                    <img className="content-bg" src={ContentBG} alt="content bg" />
 
-                <Header />
+                    <div className="hero-gradient"></div>
 
-                <FollowUs />
+                    <Header />
 
-                <Slider activeSection={this.state.activeSection} scrollToSection={this.scrollToSection} />
+                    <FollowUs />
 
-                <div className="main-wrapper">
-                    <main>
-                        <Hero hasAnimated={this.state.hasAnimated} innerRef={this.heroRef} scrollOffset={this.state.scrollOffset} />
-                        <div className="hero-wrapper"></div>
+                    <Slider activeSection={this.state.activeSection} scrollToSection={this.scrollToSection} />
 
-                        {this.sectionsList.map((section, index) => (
-                            <Section
-                                key={index}
-                                innerRef={this.sectionRefs[section.sectionId]}
-                                sectionNumber={index < 9 ? `0${index + 1}` : index + 1}
-                                isReversed={(index + 1) % 2 === 0}
-                                sectionId={section.sectionId}
-                                subTitle={section.subTitle}
-                                title={section.title}
-                                content={section.content}
-                                sectionImage={section.sectionImage}
-                            />
-                        ))}
-                    </main>
-                </div>
+                    <div className="main-wrapper">
+                        <main>
+                            <Hero hasAnimated={this.state.hasAnimated} innerRef={this.heroRef} scrollOffset={this.state.scrollOffset} />
+                            <div className="hero-wrapper"></div>
 
-                <Footer />
-            </>
-        )
+                            {this.sectionsList.map((section, index) => (
+                                <Section
+                                    key={index}
+                                    innerRef={this.sectionRefs[section.sectionId]}
+                                    sectionNumber={index < 9 ? `0${index + 1}` : index + 1}
+                                    isReversed={(index + 1) % 2 === 0}
+                                    sectionId={section.sectionId}
+                                    subTitle={section.subTitle}
+                                    title={section.title}
+                                    content={section.content}
+                                    sectionImage={section.sectionImage}
+                                />
+                            ))}
+                        </main>
+                    </div>
+
+                    <Footer />
+                </>
+            )
+        }
     }
 }
 
