@@ -1,0 +1,105 @@
+@import "../global/variables";
+
+.hero-wrapper {
+    height: calc(100vh + 225px);
+    z-index: -1;
+}
+
+#hero {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+
+    .container {
+        max-width: none;
+        width: fit-content;
+        margin: 0 auto;
+        transform: translateY(-50%);
+        overflow: hidden;
+
+        .sub-title {
+            width: fit-content;
+            transform: translateX(-89%);
+            opacity: 0;
+            transition: all 1s ease;
+
+            &.visible {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .title {
+            text-transform: capitalize;
+            font-size: 88px;
+            font-weight: normal;
+            opacity: 0;
+            transition: all 1s ease;
+
+            &.visible {
+                opacity: 1;
+            }
+        }
+
+        .scroll-btn {
+            overflow: hidden;
+            transition: all 200ms ease;
+
+            a {
+                color: $main-font-color;
+                text-decoration: none;
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: opacity 1s ease, transform 1s ease;
+
+                p {
+                    margin-right: 16px;
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+
+                svg {
+                    path {
+                        transition: all 200ms ease;
+                    }
+                }
+            }
+
+            &.visible {
+                a {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            &:hover {
+                color: $second-font-color;
+
+                .scroll-btn {
+                    svg {
+                        path {
+                            fill: $second-font-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.visible {
+        opacity: 1;
+        transition: opacity 0.5s ease;
+        pointer-events: all;
+    }
+
+    &.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+}

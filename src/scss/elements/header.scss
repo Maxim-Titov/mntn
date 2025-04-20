@@ -1,0 +1,61 @@
+@import "../global/variables";
+
+header {
+    padding: 40px 80px 0 80px;
+    z-index: 999;
+
+    .container {
+        max-width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .site-branding {
+            transform: translate(-50px, -50px);
+            opacity: 0;
+            transition: all 1s ease;
+
+            &.visible {
+                transform: translate(0);
+                opacity: 1;
+            }
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            transform: translate(50px, -50px);
+            opacity: 0;
+            transition: transform 1s ease, opacity 1s ease, color 200ms ease;
+            cursor: pointer;
+
+            svg {
+                margin-right: $gutterS;
+
+                path {
+                    transition: all 200ms ease;
+                }
+            }
+
+            p {
+                font-size: 17px;
+                font-weight: bold;
+            }
+
+            &.visible {
+                transform: translate(0);
+                opacity: 1;
+            }
+
+            &:hover {
+                color: $second-font-color;
+
+                svg {
+                    path {
+                        fill: $second-font-color;
+                    }
+
+                }
+            }
+        }
+    }
+}
