@@ -30,13 +30,14 @@ class App extends React.Component {
         this.sectionRefs = {}
         this.heroRef = React.createRef()
 
+        // List of sections
         this.sectionsList = [
             {
                 sectionId: "get-started",
                 subTitle: "Get Started",
                 title: "What level of hiker are you?",
                 content: "Determining what level of hiker you are can be an important tool when planning future hikes...",
-                sectionImage: GetStartedImage
+                sectionImage: GetStartedImage // Or write your image path like "./images/01.png"
             },
 
             {
@@ -56,6 +57,14 @@ class App extends React.Component {
             }
         ]
 
+        this.items = [
+            { id: "start", label: "Start" }
+        ]
+
+        for (let i = 0; i < this.sectionsList.length; i++) {
+            this.items.push({ id: `${this.sectionsList[i].sectionId}`, label: `${i + 1}` })
+        }
+
         this.sectionsList.forEach(section => {
             this.sectionRefs[section.sectionId] = React.createRef()
         })
@@ -68,7 +77,7 @@ class App extends React.Component {
     async componentDidMount() {
         setTimeout(() => {
             this.handleLoad()
-        }, 1000)
+        }, 2000)
 
         window.addEventListener("scroll", this.handleScroll)
 
@@ -90,7 +99,7 @@ class App extends React.Component {
             if (loadEnd) {
                 observer.observe(loadEnd)
             }
-        }, 1000)
+        }, 2000)
 
         setTimeout(() => {
             const heroHg = document.querySelector('.hero-hg')
@@ -148,11 +157,11 @@ class App extends React.Component {
             if (heroScrollBtn) {
                 observer.observe(heroScrollBtn)
             }
-        }, 1500)
+        }, 2000)
 
         setTimeout(() => {
             this.setState({ hasAnimated: true })
-        }, 2500)
+        }, 3000)
     }
 
     componentWillUnmount() {
@@ -248,11 +257,11 @@ class App extends React.Component {
 
                     <FollowUs />
 
-                    <Slider activeSection={this.state.activeSection} scrollToSection={this.scrollToSection} />
+                    <Slider items={this.items} activeSection={this.state.activeSection} scrollToSection={this.scrollToSection} />
 
                     <div className="main-wrapper">
                         <main>
-                            <Hero hasAnimated={this.state.hasAnimated} innerRef={this.heroRef} scrollOffset={this.state.scrollOffset} />
+                            <Hero scrollToSection={this.scrollToSection} hasAnimated={this.state.hasAnimated} innerRef={this.heroRef} scrollOffset={this.state.scrollOffset} />
                             <div className="hero-wrapper"></div>
 
                             {this.sectionsList.map((section, index) => (

@@ -2,14 +2,7 @@ import React from "react"
 
 class Slider extends React.Component {
     render() {
-        const { activeSection, scrollToSection } = this.props
-
-        const items = [
-            { id: "start", label: "Start" },
-            { id: "get-started", label: "1" },
-            { id: "hiking-essentials", label: "2" },
-            { id: "where-you-go", label: "3" }
-        ]
+        const { activeSection, scrollToSection, items } = this.props
 
         return (
             <div className="slider">

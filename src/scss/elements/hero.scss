@@ -38,6 +38,7 @@
             font-weight: normal;
             opacity: 0;
             transition: all 1s ease;
+            width: 894px;
 
             &.visible {
                 opacity: 1;
@@ -47,7 +48,7 @@
         .scroll-btn {
             overflow: hidden;
 
-            a {
+            .button {
                 color: $main-font-color;
                 text-decoration: none;
                 display: flex;
@@ -81,7 +82,7 @@
             }
 
             &.visible {
-                a {
+                .button {
                     transform: translateY(0);
                     opacity: 1;
                 }

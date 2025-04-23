@@ -1,5 +1,7 @@
 import React from "react"
 
+import config from "../siteConfig.json"
+
 class Hero extends React.Component {
     render() {
         const maxScroll = 900
@@ -30,20 +32,18 @@ class Hero extends React.Component {
                 <div className="container">
                     <h3 className="sub-title">
                         <span className="line"></span>
-                        <span>A Hiking guide</span>
+                        <span>{config.heroTitle}</span>
                     </h3>
 
-                    <h2 className="title">
-                        Be prepared for the <br /> Mountains and beyond!
-                    </h2>
+                    <h2 className="title">{config.heroText}</h2>
 
-                    <div className="scroll-btn">
-                        <a href="#get-started">
+                    <div className="scroll-btn" onClick={() => this.props.scrollToSection("get-started")}>
+                        <div className="button">
                             <p>scroll down</p>
                             <svg width="16" height="24" viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16 16L14.59 14.59L9 20.17V0H7V20.17L1.42 14.58L0 16L8 24L16 16Z" fill="white" />
                             </svg>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </section>

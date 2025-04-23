@@ -1,5 +1,7 @@
 import React from "react"
 
+import config from "../siteConfig.json"
+
 import MoreOnBlog from "./MoreOnBlog"
 import MoreOnMntn from "./MoreOnMntn"
 
@@ -13,10 +15,10 @@ class Footer extends React.Component {
                     <div className="content">
                         <div>
                             <img src={Logo} alt="logo" />
-                            <p>Get out there & discover your next slope, mountain & destination!</p>
+                            <p>{config.footerText}</p>
                         </div>
 
-                        <p className="copyright">Copyright 2023 MNTN, Inc. Terms & Privacy</p>
+                        <p className="copyright">{config.footerCopyright}</p>
                     </div>
 
                     <div className="more">
