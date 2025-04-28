@@ -166,7 +166,7 @@ h5 {
   z-index: 75;
 }
 
-.load-end {
+.load {
   width: 100%;
   height: 100vh;
   position: absolute;
@@ -177,32 +177,29 @@ h5 {
   transition: all 1s ease;
   z-index: 999;
 }
-.load-end.visible {
-  opacity: 0;
-  z-index: -2;
-}
-
-.load {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  animation: load 2s;
-}
 .load img {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation: load 4s forwards;
+}
+.load.visible {
+  opacity: 0;
+  z-index: -2;
 }
 
 @keyframes load {
   0% {
     opacity: 0;
   }
-  45% {
+  37% {
     opacity: 1;
   }
-  90% {
+  75% {
+    opacity: 0;
+  }
+  100% {
     opacity: 0;
   }
 }

@@ -1,6 +1,5 @@
 import React from "react"
 
-import Load from "./components/Load"
 import Slider from "./components/Slider"
 import FollowUs from "./components/FollowUs"
 import Header from "./components/Header"
@@ -8,6 +7,7 @@ import Hero from "./components/Hero"
 import Section from "./components/Section"
 import Footer from "./components/Footer"
 
+import Logo from "./images/logo.png"
 import HeroHG from "./images/HG.svg"
 import HeroMG from "./images/MG.svg"
 import HeroVG from "./images/VG.svg"
@@ -23,8 +23,7 @@ class App extends React.Component {
         this.state = {
             scrollOffset: 0,
             activeSection: "start",
-            hasAnimated: false,
-            isLoaded: false
+            hasAnimated: false
         }
 
         this.sectionRefs = {}
@@ -69,18 +68,12 @@ class App extends React.Component {
             this.sectionRefs[section.sectionId] = React.createRef()
         })
 
-        this.handleLoad = this.handleLoad.bind(this)
         this.handleScroll = this.handleScroll.bind(this)
         this.scrollToSection = this.scrollToSection.bind(this)
     }
 
     async componentDidMount() {
-        setTimeout(() => {
-            this.handleLoad()
-        }, 2000)
-
         window.addEventListener("scroll", this.handleScroll)
-
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -94,12 +87,12 @@ class App extends React.Component {
         })
 
         setTimeout(() => {
-            const loadEnd = document.querySelector('.load-end')
+            const load = document.querySelector('.load')
 
-            if (loadEnd) {
-                observer.observe(loadEnd)
+            if (load) {
+                observer.observe(load)
             }
-        }, 2000)
+        }, 3000)
 
         setTimeout(() => {
             const heroHg = document.querySelector('.hero-hg')
@@ -157,21 +150,15 @@ class App extends React.Component {
             if (heroScrollBtn) {
                 observer.observe(heroScrollBtn)
             }
-        }, 2000)
+        }, 3000)
 
         setTimeout(() => {
             this.setState({ hasAnimated: true })
-        }, 3000)
+        }, 4000)
     }
 
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll)
-    }
-
-    handleLoad() {
-        this.setState({
-            isLoaded: true
-        })
     }
 
     handleScroll() {
@@ -239,51 +226,49 @@ class App extends React.Component {
             willChange: 'transform'
         } : {}
 
-        if (!this.state.isLoaded) {
-            return <Load />
-        } else {
-            return (
-                <>
-                    <div className="load-end"></div>
+        return (
+            <>
+                <div className="load">
+                    <img src={Logo} alt="logo" />
+                </div>
 
-                    <img className="hero-hg" src={HeroHG} alt="hg" style={styleForHg} />
-                    <img className="hero-mg" src={HeroMG} alt="mg" style={styleForMg} />
-                    <img className="hero-vg" src={HeroVG} alt="vg" />
-                    <img className="content-bg" src={ContentBG} alt="content bg" />
+                <img className="hero-hg" src={HeroHG} alt="hg" style={styleForHg} />
+                <img className="hero-mg" src={HeroMG} alt="mg" style={styleForMg} />
+                <img className="hero-vg" src={HeroVG} alt="vg" />
+                <img className="content-bg" src={ContentBG} alt="content bg" />
 
-                    <div className="hero-gradient"></div>
+                <div className="hero-gradient"></div>
 
-                    <Header />
+                <Header />
 
-                    <FollowUs />
+                <FollowUs />
 
-                    <Slider items={this.items} activeSection={this.state.activeSection} scrollToSection={this.scrollToSection} />
+                <Slider items={this.items} activeSection={this.state.activeSection} scrollToSection={this.scrollToSection} />
 
-                    <div className="main-wrapper">
-                        <main>
-                            <Hero scrollToSection={this.scrollToSection} hasAnimated={this.state.hasAnimated} innerRef={this.heroRef} scrollOffset={this.state.scrollOffset} />
-                            <div className="hero-wrapper"></div>
+                <div className="main-wrapper">
+                    <main>
+                        <Hero scrollToSection={this.scrollToSection} hasAnimated={this.state.hasAnimated} innerRef={this.heroRef} scrollOffset={this.state.scrollOffset} />
+                        <div className="hero-wrapper"></div>
 
-                            {this.sectionsList.map((section, index) => (
-                                <Section
-                                    key={index}
-                                    innerRef={this.sectionRefs[section.sectionId]}
-                                    sectionNumber={index < 9 ? `0${index + 1}` : index + 1}
-                                    isReversed={(index + 1) % 2 === 0}
-                                    sectionId={section.sectionId}
-                                    subTitle={section.subTitle}
-                                    title={section.title}
-                                    content={section.content}
-                                    sectionImage={section.sectionImage}
-                                />
-                            ))}
-                        </main>
-                    </div>
+                        {this.sectionsList.map((section, index) => (
+                            <Section
+                                key={index}
+                                innerRef={this.sectionRefs[section.sectionId]}
+                                sectionNumber={index < 9 ? `0${index + 1}` : index + 1}
+                                isReversed={(index + 1) % 2 === 0}
+                                sectionId={section.sectionId}
+                                subTitle={section.subTitle}
+                                title={section.title}
+                                content={section.content}
+                                sectionImage={section.sectionImage}
+                            />
+                        ))}
+                    </main>
+                </div>
 
-                    <Footer />
-                </>
-            )
-        }
+                <Footer />
+            </>
+        )
     }
 }
 
